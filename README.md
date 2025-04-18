@@ -1,17 +1,21 @@
 # Oops-TA-2 
-//single thread single task
-class Task1 {
+# OOPS Assignment - TA-2
+
+```java
+// Question 1: Single thread single task
+class Q1 {
     void execute() {
         System.out.println("Task 1 is running...");
     }
 
     public static void main(String[] args) {
-        Task1 t = new Task1();
+        Q1 t = new Q1();
         t.execute();
     }
 }
-//single thread multi task
-class Tasks {
+
+// Question 2: Single thread multi task
+class Q2 {
     void task1() {
         System.out.println("Task 1 is running...");
     }
@@ -21,152 +25,162 @@ class Tasks {
     }
 
     public static void main(String[] args) {
-        Tasks t = new Tasks();
+        Q2 t = new Q2();
         t.task1();
         t.task2();
     }
 }
-//multiple thread single task
-class MyTask extends Thread {
+
+// Question 3: Multithread single task
+class MySingleTask extends Thread {
     public void run() {
         System.out.println("Running single task from: " + Thread.currentThread().getName());
     }
 
     public static void main(String[] args) {
-        MyTask t1 = new MyTask();
-        MyTask t2 = new MyTask();
+        MySingleTask t1 = new MySingleTask();
+        MySingleTask t2 = new MySingleTask();
         t1.start();
         t2.start();
     }
 }
-//multiple tgreads multiple task
 
-class Task1 extends Thread {
+// Question 4: Multithread multi task
+class MultiTask1 extends Thread {
     public void run() {
-        System.out.println("Task 1 running...");
+        System.out.println("Task 1 running in: " + Thread.currentThread().getName());
     }
 }
 
-class Task2 extends Thread {
+class MultiTask2 extends Thread {
     public void run() {
-        System.out.println("Task 2 running...");
+        System.out.println("Task 2 running in: " + Thread.currentThread().getName());
     }
-}
 
-public class MultiThreadMultiTask {
     public static void main(String[] args) {
-        Task1 t1 = new Task1();
-        Task2 t2 = new Task2();
+        MultiTask1 t1 = new MultiTask1();
+        MultiTask2 t2 = new MultiTask2();
         t1.start();
         t2.start();
     }
 }
-//creating a file
-import java.io.*;
 
-public class FileCreation {
+// Question 5: Write a Java program to create a file
+import java.io.File;
+import java.io.IOException;
+
+class Q5 {
     public static void main(String[] args) {
         try {
-            File f1 = new File("TestFile1.txt");
-            f1.createNewFile();
-            System.out.println("File created: " + f1.getName());
-
-            File f2 = new File("TestFile2.txt");
-            f2.createNewFile();
-            System.out.println("File created: " + f2.getName());
-
-        } catch (IOException e) {
-            System.out.println("An error occurred.");
-        }
-    }
-}
-//writing a file
-import java.io.*;
-
-public class FileWriting {
-    public static void main(String[] args) {
-        try {
-            FileWriter w1 = new FileWriter("TestFile1.txt");
-            w1.write("Writing something in this file....");
-            System.out.println("Done writing in the file.");
-            w1.close();
-
-        } catch (IOException e) {
-            System.out.println("An error occurred.");
-        }
-    }
-}
-//reading from a file
-import java.io.*;
-
-public class FileWriting {
-    public static void main(String[] args) {
-        try {
-            FileWriter w1 = new FileWriter("TestFile1.txt");
-            w1.write("Writing something in this file....");
-            System.out.println("Done writing in the file.");
-            w1.close();
-
-        } catch (IOException e) {
-            System.out.println("An error occurred.");
-        }
-    }
-}
-//copying data from one file to another
-import java.io.*;
-
-public class FileCopy {
-    public static void main(String[] args) {
-        try {
-            FileReader r1 = new FileReader("TestFile1.txt");
-            FileWriter w2 = new FileWriter("TestFile2.txt");
-
-            int i;
-            while ((i = r1.read()) != -1) {
-                w2.write(i);
+            File file = new File("example.txt");
+            if (file.createNewFile()) {
+                System.out.println("File created: " + file.getName());
+            } else {
+                System.out.println("File already exists.");
             }
-
-            System.out.println("File copied successfully.");
-            r1.close();
-            w2.close();
-
         } catch (IOException e) {
             System.out.println("An error occurred.");
+            e.printStackTrace();
         }
     }
 }
-//arithmetic exception
-public class ArithmeticExceptionExample {
+
+// Question 6: To read from a file
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+class Q6 {
     public static void main(String[] args) {
         try {
-            int a = 10;
-            int b = 0;
-            int result = a / b; // This will throw ArithmeticException
-            System.out.println("Result: " + result);
-        } catch (ArithmeticException e) {
-            System.out.println("Cannot divide by zero!");
+            File file = new File("example.txt");
+            Scanner reader = new Scanner(file);
+            while (reader.hasNextLine()) {
+                String data = reader.nextLine();
+                System.out.println(data);
+            }
+            reader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found.");
+            e.printStackTrace();
         }
-        
-        System.out.println("Program continues...");
     }
 }
-//multiple inheritance using interface
+
+// Question 7: Write to a file
+import java.io.FileWriter;
+import java.io.IOException;
+
+class Q7 {
+    public static void main(String[] args) {
+        try {
+            FileWriter writer = new FileWriter("example.txt");
+            writer.write("This is a sample content.");
+            writer.close();
+            System.out.println("Successfully wrote to the file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
+}
+
+// Question 8: Copying data from one file to another
+import java.io.*;
+
+class Q8 {
+    public static void main(String[] args) {
+        try {
+            FileReader fr = new FileReader("source.txt");
+            FileWriter fw = new FileWriter("destination.txt");
+            int ch;
+            while ((ch = fr.read()) != -1) {
+                fw.write(ch);
+            }
+            fr.close();
+            fw.close();
+            System.out.println("File copied successfully.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+// Question 9: ArithmeticException example
+class Q9 {
+    public static void main(String[] args) {
+        try {
+            int a = 10, b = 0;
+            int c = a / b;
+            System.out.println(c);
+        } catch (ArithmeticException e) {
+            System.out.println("Cannot divide by zero.");
+        }
+    }
+}
+
+// Question 10: Multiple inheritance using interface
 interface A {
-    void methodA();
+    void showA();
 }
 
 interface B {
-    void methodB();
+    void showB();
 }
 
-class C implements A, B {
-    public void methodA() {
-        System.out.println("Method A");
+class Q10 implements A, B {
+    public void showA() {
+        System.out.println("Interface A method");
     }
-    public void methodB() {
-        System.out.println("Method B");
+
+    public void showB() {
+        System.out.println("Interface B method");
+    }
+
+    public static void main(String[] args) {
+        Q10 obj = new Q10();
+        obj.showA();
+        obj.showB();
     }
 }
-
-
-
+```
